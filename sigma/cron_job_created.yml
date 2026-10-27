@@ -1,0 +1,29 @@
+title: Cron Job File Created or Modified
+id: 6a1d1f10-0a04-4a21-9a04-cronjob00001
+status: experimental
+description: A change under a cron directory. An attacker schedules code to run on its own.
+references:
+  - https://attack.mitre.org/techniques/T1053/003/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|contains:
+      - '/etc/cron.d/'
+      - '/etc/cron.daily/'
+      - '/etc/cron.hourly/'
+      - '/var/spool/cron/'
+  condition: selection
+falsepositives:
+  - A package installing a cron job. Correlate with package activity.
+level: high
+tags:
+  - attack.persistence
+  - attack.t1053.003
+wazuh:
+  id: 100213
+  level: 10
+  parent: { if_group: syscheck }

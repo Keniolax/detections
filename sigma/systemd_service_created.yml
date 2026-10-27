@@ -1,0 +1,30 @@
+title: Systemd Service Unit Created or Modified
+id: 6a1d1f10-0a05-4a21-9a05-systemd000001
+status: experimental
+description: A change under a systemd unit directory. An attacker installs a service for persistence.
+references:
+  - https://attack.mitre.org/techniques/T1543/002/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|contains:
+      - '/etc/systemd/system/'
+      - '/lib/systemd/system/'
+      - '/.config/systemd/user/'
+  selection_ext:
+    TargetFilename|endswith: '.service'
+  condition: selection and selection_ext
+falsepositives:
+  - A package installing a service unit. Correlate with package activity.
+level: high
+tags:
+  - attack.persistence
+  - attack.t1543.002
+wazuh:
+  id: 100214
+  level: 10
+  parent: { if_group: syscheck }

@@ -1,0 +1,52 @@
+<!-- Generated from sigma/ by convert/sigma_to_wazuh.py. Do not edit by hand. -->
+<group name="lab,detections,">
+  <rule id="100210" level="10">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?:/\.ssh/authorized_keys$|/\.ssh/authorized_keys2$)</field>
+    <description>SSH authorized_keys File Modified</description>
+    <mitre><id>T1098.004</id></mitre>
+  </rule>
+  <rule id="100211" level="10">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?:/etc/profile$|/\.bashrc$|/\.bash_profile$|/\.profile$|/etc/profile\.d/)</field>
+    <description>Unix Shell Profile Modified</description>
+    <mitre><id>T1546.004</id></mitre>
+  </rule>
+  <rule id="100212" level="8">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?:/\.bash_history$|/\.zsh_history$|/\.sh_history$)</field>
+    <description>Shell Command History Cleared</description>
+    <mitre><id>T1070.003</id></mitre>
+  </rule>
+  <rule id="100213" level="10">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?:/etc/cron\.d/|/etc/cron\.daily/|/etc/cron\.hourly/|/var/spool/cron/)</field>
+    <description>Cron Job File Created or Modified</description>
+    <mitre><id>T1053.003</id></mitre>
+  </rule>
+  <rule id="100214" level="10">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?:/etc/systemd/system/|/lib/systemd/system/|/\.config/systemd/user/)</field>
+    <field name="file" type="pcre2">(?:\.service$)</field>
+    <description>Systemd Service Unit Created or Modified</description>
+    <mitre><id>T1543.002</id></mitre>
+  </rule>
+  <rule id="100220" level="8">
+    <if_sid>5902</if_sid>
+    <description>Local Account Created</description>
+    <mitre><id>T1136.001</id></mitre>
+  </rule>
+  <rule id="100221" level="12">
+    <if_group>syscheck</if_group>
+    <field name="file" type="pcre2">(?:/etc/ld\.so\.preload$)</field>
+    <description>Dynamic Linker Preload File Created</description>
+    <mitre><id>T1574.006</id></mitre>
+  </rule>
+  <rule id="100222" level="12" frequency="6" timeframe="120">
+    <if_matched_sid>5710</if_matched_sid>
+    <same_source_ip />
+    <different_srcuser />
+    <description>SSH Password Spraying From One Source</description>
+    <mitre><id>T1110.003</id></mitre>
+  </rule>
+</group>

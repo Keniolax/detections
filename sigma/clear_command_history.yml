@@ -1,0 +1,28 @@
+title: Shell Command History Cleared
+id: 6a1d1f10-0a03-4a21-9a03-history00001
+status: experimental
+description: A change to a shell history file. An attacker truncates it to hide what they ran.
+references:
+  - https://attack.mitre.org/techniques/T1070/003/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith:
+      - '/.bash_history'
+      - '/.zsh_history'
+      - '/.sh_history'
+  condition: selection
+falsepositives:
+  - A user clearing their own history. Rare on a server account.
+level: medium
+tags:
+  - attack.defense-evasion
+  - attack.t1070.003
+wazuh:
+  id: 100212
+  level: 8
+  parent: { if_group: syscheck }

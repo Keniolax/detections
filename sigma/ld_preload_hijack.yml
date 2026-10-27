@@ -1,0 +1,29 @@
+title: Dynamic Linker Preload File Created
+id: 6a1d1f10-0a09-4a21-9a09-ldpreload00001
+status: experimental
+description: >
+  A change to /etc/ld.so.preload. The dynamic linker loads any library listed
+  there into every program that starts, so an attacker uses it to run code and
+  hide. The file is normally absent, so its appearance is suspicious on its own.
+references:
+  - https://attack.mitre.org/techniques/T1574/006/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith: '/etc/ld.so.preload'
+  condition: selection
+falsepositives:
+  - A few monitoring or security agents install a preload library. Allowlist the known ones.
+level: critical
+tags:
+  - attack.persistence
+  - attack.defense-evasion
+  - attack.t1574.006
+wazuh:
+  id: 100221
+  level: 12
+  parent: { if_group: syscheck }

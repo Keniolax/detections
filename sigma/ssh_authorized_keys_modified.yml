@@ -1,0 +1,27 @@
+title: SSH authorized_keys File Modified
+id: 6a1d1f10-0a01-4a21-9a01-aut0keys0001
+status: experimental
+description: A change to an authorized_keys file. An attacker adds a key to keep SSH access.
+references:
+  - https://attack.mitre.org/techniques/T1098/004/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith:
+      - '/.ssh/authorized_keys'
+      - '/.ssh/authorized_keys2'
+  condition: selection
+falsepositives:
+  - An administrator adding a legitimate key. Correlate with who and when.
+level: high
+tags:
+  - attack.persistence
+  - attack.t1098.004
+wazuh:
+  id: 100210
+  level: 10
+  parent: { if_group: syscheck }

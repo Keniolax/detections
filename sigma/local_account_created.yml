@@ -1,0 +1,26 @@
+title: Local Account Created
+id: 6a1d1f10-0a06-4a21-9a06-newuser000001
+status: experimental
+description: A new local account on the host. An attacker adds one to keep access.
+references:
+  - https://attack.mitre.org/techniques/T1136/001/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  service: auth
+detection:
+  selection:
+    process: useradd
+    action: new_user
+  condition: selection
+falsepositives:
+  - Routine account provisioning. Correlate with a change ticket.
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1136.001
+wazuh:
+  id: 100220
+  level: 8
+  parent: { if_sid: '5902' }

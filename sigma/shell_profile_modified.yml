@@ -1,0 +1,31 @@
+title: Unix Shell Profile Modified
+id: 6a1d1f10-0a02-4a21-9a02-profile00001
+status: experimental
+description: A change to a shell startup file. An attacker runs code at each login or new shell.
+references:
+  - https://attack.mitre.org/techniques/T1546/004/
+author: home-soc-lab
+date: 2026/10/27
+logsource:
+  product: linux
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith:
+      - '/etc/profile'
+      - '/.bashrc'
+      - '/.bash_profile'
+      - '/.profile'
+  selection_dir:
+    TargetFilename|contains: '/etc/profile.d/'
+  condition: selection or selection_dir
+falsepositives:
+  - A package installing a profile script. Correlate with package activity.
+level: high
+tags:
+  - attack.persistence
+  - attack.t1546.004
+wazuh:
+  id: 100211
+  level: 10
+  parent: { if_group: syscheck }
