@@ -1,0 +1,140 @@
+{
+  "results": [
+    {
+      "rule_id": 100210,
+      "technique": "T1098.004",
+      "label": "SSH authorized_keys modified",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100210",
+        "level": 10,
+        "description": "SSH authorized_keys File Modified",
+        "mitre": [
+          "T1098.004"
+        ],
+        "path": "/root/.ssh/authorized_keys",
+        "full_log": "File '/root/.ssh/authorized_keys' added\nMode: realtime"
+      }
+    },
+    {
+      "rule_id": 100211,
+      "technique": "T1546.004",
+      "label": "Shell profile modified",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100211",
+        "level": 10,
+        "description": "Unix Shell Profile Modified",
+        "mitre": [
+          "T1546.004"
+        ],
+        "path": "/etc/profile.d/bash_completion.sh",
+        "full_log": "File '/etc/profile.d/bash_completion.sh' added\nMode: realtime"
+      }
+    },
+    {
+      "rule_id": 100212,
+      "technique": "T1070.003",
+      "label": "Bash history cleared",
+      "fired": true,
+      "count": 2,
+      "sample": {
+        "rule_id": "100212",
+        "level": 8,
+        "description": "Shell Command History Cleared",
+        "mitre": [
+          "T1070.003"
+        ],
+        "path": "/root/.bash_history",
+        "full_log": "File '/root/.bash_history' modified\nMode: realtime\nChanged attributes: size,mtime,md5,sha1,sha256\nSize changed from '26' to '1'\nOld modification time was: '1793"
+      }
+    },
+    {
+      "rule_id": 100213,
+      "technique": "T1053.003",
+      "label": "Cron job created",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100213",
+        "level": 10,
+        "description": "Cron Job File Created or Modified",
+        "mitre": [
+          "T1053.003"
+        ],
+        "path": "/etc/cron.d/proof-cron",
+        "full_log": "File '/etc/cron.d/proof-cron' added\nMode: realtime"
+      }
+    },
+    {
+      "rule_id": 100214,
+      "technique": "T1543.002",
+      "label": "Systemd service created",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100214",
+        "level": 10,
+        "description": "Systemd Service Unit Created or Modified",
+        "mitre": [
+          "T1543.002"
+        ],
+        "path": "/etc/systemd/system/proof.service",
+        "full_log": "File '/etc/systemd/system/proof.service' added\nMode: realtime"
+      }
+    },
+    {
+      "rule_id": 100220,
+      "technique": "T1136.001",
+      "label": "Local account created",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100220",
+        "level": 8,
+        "description": "Local Account Created",
+        "mitre": [
+          "T1136.001"
+        ],
+        "path": null,
+        "full_log": "Oct 27 17:13:49 victim useradd[1119]: new user: name=proofacct, UID=999, GID=100, home=/home/proofacct, shell=/bin/bash, from=none"
+      }
+    },
+    {
+      "rule_id": 100221,
+      "technique": "T1574.006",
+      "label": "Dynamic linker preload file created",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100221",
+        "level": 12,
+        "description": "Dynamic Linker Preload File Created",
+        "mitre": [
+          "T1574.006"
+        ],
+        "path": "/etc/ld.so.preload",
+        "full_log": "File '/etc/ld.so.preload' modified\nMode: realtime\nChanged attributes: size,mtime,md5,sha1,sha256\nSize changed from '0' to '13'\nOld modification time was: '17931"
+      }
+    },
+    {
+      "rule_id": 100222,
+      "technique": "T1110.003",
+      "label": "SSH password spraying (many users)",
+      "fired": true,
+      "count": 1,
+      "sample": {
+        "rule_id": "100222",
+        "level": 12,
+        "description": "SSH Password Spraying From One Source",
+        "mitre": [
+          "T1110.003"
+        ],
+        "path": null,
+        "full_log": "Oct 27 17:14:19 victim sshd[1185]: Invalid user spray6 from 172.18.0.6 port 39298"
+      }
+    }
+  ]
+}
