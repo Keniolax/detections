@@ -1,0 +1,61 @@
+# How each rule is proven: run the real technique on the lab victim, then check
+# the rule fires. `kind` says how the technique is driven:
+#   victim - run the command inside the victim
+#   brute  - the lab probe makes `count` failed logins as one user
+#   spray  - one source makes failed logins as `users` different usernames
+proofs:
+  - rule_id: 100210
+    technique: T1098.004
+    label: SSH authorized_keys modified
+    kind: victim
+    setup: "mkdir -p /root/.ssh"
+    command: "echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5proofkey attacker@lab' >> /root/.ssh/authorized_keys"
+    cleanup: "rm -f /root/.ssh/authorized_keys"
+
+  - rule_id: 100211
+    technique: T1546.004
+    label: Shell profile modified
+    kind: victim
+    command: "echo '# proof T1546.004' >> /etc/profile.d/bash_completion.sh"
+    cleanup: "sed -i '/proof T1546.004/d' /etc/profile.d/bash_completion.sh"
+
+  - rule_id: 100212
+    technique: T1070.003
+    label: Bash history cleared
+    kind: victim
+    setup: "printf 'id\\nwhoami\\ncat /etc/shadow\\n' > /root/.bash_history"
+    command: "echo \"\" > /root/.bash_history"
+
+  - rule_id: 100213
+    technique: T1053.003
+    label: Cron job created
+    kind: victim
+    command: "echo '* * * * * root /tmp/evil.sh' > /etc/cron.d/proof-cron"
+    cleanup: "rm -f /etc/cron.d/proof-cron"
+
+  - rule_id: 100214
+    technique: T1543.002
+    label: Systemd service created
+    kind: victim
+    command: "printf '[Unit]\\nDescription=proof\\n[Service]\\nExecStart=/tmp/evil.sh\\n[Install]\\nWantedBy=multi-user.target\\n' > /etc/systemd/system/proof.service"
+    cleanup: "rm -f /etc/systemd/system/proof.service"
+
+  - rule_id: 100220
+    technique: T1136.001
+    label: Local account created
+    kind: victim
+    command: "useradd -M -N -r -s /bin/bash -c evil_account proofacct"
+    cleanup: "userdel proofacct 2>/dev/null || true"
+
+  - rule_id: 100221
+    technique: T1574.006
+    label: Dynamic linker preload file created
+    kind: victim
+    command: "echo /tmp/evil.so > /etc/ld.so.preload"
+    cleanup: "rm -f /etc/ld.so.preload"
+
+  - rule_id: 100222
+    technique: T1110.003
+    label: SSH password spraying (many users)
+    kind: spray
+    users: 8
